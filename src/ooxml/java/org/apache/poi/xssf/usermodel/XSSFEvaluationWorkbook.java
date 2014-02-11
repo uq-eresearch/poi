@@ -18,6 +18,7 @@
 package org.apache.poi.xssf.usermodel;
 
 import org.apache.poi.ss.SpreadsheetVersion;
+import org.apache.poi.ss.formula.CollaboratingWorkbooksEnvironment.WorkbookNotFoundException;
 import org.apache.poi.ss.formula.EvaluationCell;
 import org.apache.poi.ss.formula.EvaluationName;
 import org.apache.poi.ss.formula.EvaluationSheet;
@@ -99,7 +100,7 @@ public final class XSSFEvaluationWorkbook implements FormulaRenderingWorkbook, E
 	}
 	
 	public ExternalName getExternalName(int externSheetIndex, int externNameIndex) {
-	   throw new RuntimeException("Not implemented yet");
+		throw new RuntimeException("Not implemented yet", new WorkbookNotFoundException());
 	}
 
 	public NameXPtg getNameXPtg(String name) {
@@ -124,7 +125,7 @@ public final class XSSFEvaluationWorkbook implements FormulaRenderingWorkbook, E
 		return null;
 	}
 	public int getExternalSheetIndex(String workbookName, String sheetName) {
-		throw new RuntimeException("not implemented yet");
+		throw new RuntimeException("Not implemented yet", new WorkbookNotFoundException());
 	}
 	public int getSheetIndex(String sheetName) {
 		return _uBook.getSheetIndex(sheetName);

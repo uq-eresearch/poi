@@ -36,6 +36,7 @@ import java.util.Set;
 public final class CollaboratingWorkbooksEnvironment {
 
 	public static final class WorkbookNotFoundException extends Exception {
+		public WorkbookNotFoundException() {}
 		WorkbookNotFoundException(String msg) {
 			super(msg);
 		}
