@@ -18,6 +18,7 @@
 package org.apache.poi.hssf.usermodel;
 
 import org.apache.poi.ss.formula.CollaboratingWorkbooksEnvironment;
+import org.apache.poi.ss.formula.EvaluationHelper;
 import org.apache.poi.ss.formula.IStabilityClassifier;
 import org.apache.poi.ss.formula.WorkbookEvaluator;
 import org.apache.poi.ss.formula.eval.BoolEval;
@@ -29,8 +30,6 @@ import org.apache.poi.ss.formula.udf.UDFFinder;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 /**
@@ -299,7 +298,7 @@ public class HSSFFormulaEvaluator implements FormulaEvaluator  {
 	 *  cells, and calling evaluateFormulaCell on each one.
 	 */
 	public static void evaluateAllFormulaCells(HSSFWorkbook wb) {
-	   evaluateAllFormulaCells(wb, new HSSFFormulaEvaluator(wb));
+		EvaluationHelper.evaluateAllFormulaCells(wb);
 	}
 	
    /**
@@ -312,25 +311,12 @@ public class HSSFFormulaEvaluator implements FormulaEvaluator  {
     *  are made.
     * This is a helpful wrapper around looping over all
     *  cells, and calling evaluateFormulaCell on each one.
+    *  @deprecated (Feb 2014) - use EvaluationHelper.evaluateAllFormulaCells(...)
     */
 	public static void evaluateAllFormulaCells(Workbook wb) {
-      FormulaEvaluator evaluator = wb.getCreationHelper().createFormulaEvaluator();
-      evaluateAllFormulaCells(wb, evaluator);
+		EvaluationHelper.evaluateAllFormulaCells(wb);
 	}
-	private static void evaluateAllFormulaCells(Workbook wb, FormulaEvaluator evaluator) {
-      for(int i=0; i<wb.getNumberOfSheets(); i++) {
-         Sheet sheet = wb.getSheetAt(i);
 
-         for(Row r : sheet) {
-            for (Cell c : r) {
-               if (c.getCellType() == HSSFCell.CELL_TYPE_FORMULA) {
-                  evaluator.evaluateFormulaCell(c);
-               }
-            }
-         }
-      }
-	}
-	
    /**
     * Loops over all cells in all sheets of the supplied
     *  workbook.
@@ -343,7 +329,7 @@ public class HSSFFormulaEvaluator implements FormulaEvaluator  {
     *  cells, and calling evaluateFormulaCell on each one.
     */
    public void evaluateAll() {
-      evaluateAllFormulaCells(_book, this);
+      EvaluationHelper.evaluateAllFormulaCells(_book, this);
    }
 
 	/**
